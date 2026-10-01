@@ -1,0 +1,5 @@
+*:Zone.Identifier
+/.idea/
+*.iml
+out/
+splab/target/
