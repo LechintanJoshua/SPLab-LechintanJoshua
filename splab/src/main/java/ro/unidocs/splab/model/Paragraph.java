@@ -10,6 +10,9 @@ public class Paragraph implements Element {
         this.text = text;
     }
 
+    /**
+     * Afiseaza continutul paragrafului
+     */
     public void print() {
         System.out.println("Paragraph: " + this.text);
     }
