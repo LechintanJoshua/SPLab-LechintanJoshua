@@ -1,21 +1,28 @@
 package ro.unidocs.splab.model;
 
-import java.lang.String;
-import java.lang.StringBuffer;
-
 /**
- * Interfata Element reprezinta orice componenta individuala
+ * Element reprezinta orice componenta individuala
  * sau compusa a cartii.
  */
-public interface Element {
-    void print();
+public abstract class Element {
+    private Element parent = null;
+
+    public abstract void print();
+
+    public Element getParent() {
+        return this.parent;
+    }
+
+    public void setParent(Element parent) {
+        this.parent = parent;
+    }
 
     /**
      * Metoda default pentru adaugarea unui Element.
      * @param el Elementul care va fi adaugat.
      * @throws UnsupportedOperationException implicit, deoarece nodurile de tip frunza nu accepta elemente copil.
      */
-    default void add(Element el) {
+    public void add(Element el) {
         throw new UnsupportedOperationException("Cannot add an element here.");
     }
 
@@ -24,7 +31,7 @@ public interface Element {
      * @param el Elementul care va fi sters.
      * @throws UnsupportedOperationException implicit.
      */
-    default void remove(Element el) {
+    public void remove(Element el) {
         throw new UnsupportedOperationException("Cannot remove an element from here.");
     }
 
@@ -34,7 +41,7 @@ public interface Element {
      * @return Elementul la acea pozitie.
      * @throws UnsupportedOperationException implicit.
      */
-    default Element get(int idx) {
+    public Element get(int idx) {
         throw new UnsupportedOperationException("Cannot get an element from here.");
     }
 }

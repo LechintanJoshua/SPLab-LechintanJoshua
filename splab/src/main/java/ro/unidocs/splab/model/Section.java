@@ -7,7 +7,7 @@ import java.util.List;
  * Reprezinta un capitol/subcapitol dintr-o carte.
  * Functioneaza ca un nod Compozit care poate contine alte Elemente.
  */
-public class Section implements Element {
+public class Section extends Element {
     private String title;
     private List<Element> elements;
 
@@ -23,11 +23,12 @@ public class Section implements Element {
      */
     @Override
     public void add (Element el) {
-        if (el == null) {
-            throw new IllegalArgumentException("Cannot add a null element to the Section.");
+        if (el.getParent() != null) {
+            throw new UnsupportedOperationException("Element already belongs to a section");
         }
 
         this.elements.add(el);
+        el.setParent(this);
     }
 
     /**
