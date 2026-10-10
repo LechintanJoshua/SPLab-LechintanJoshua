@@ -9,7 +9,6 @@ public class AlignLeft implements AlignStrategy {
     
     @Override
     public void render(Paragraph p) {
-        // Aliniere la stanga: fara spatii inainte
         System.out.println(p.getText());
     }
 }

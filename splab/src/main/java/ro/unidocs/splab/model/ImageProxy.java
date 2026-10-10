@@ -11,7 +11,7 @@ public class ImageProxy extends Element {
     public ImageProxy(String url) {
         super();
         this.url = url;
-        this.realImage = null; // Imaginea grea ramane neincarcata initial
+        this.realImage = null;
     }
 
     /**
@@ -22,12 +22,12 @@ public class ImageProxy extends Element {
         if (this.realImage == null) {
             this.realImage = new Image(this.url);
         }
+
         return this.realImage;
     }
 
     @Override
     public void print() {
-        // La apelul print(), proxy-ul forteaza incarcarea si apoi deleaga catre instanta reala
         loadImage().print();
     }
 }

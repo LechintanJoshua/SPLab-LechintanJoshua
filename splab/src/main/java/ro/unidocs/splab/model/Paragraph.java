@@ -13,7 +13,7 @@ public class Paragraph extends Element {
     public Paragraph(String text) {
         super();
         this.text = text;
-        this.alignStrategy = null; // Implicit, nicio strategie
+        this.alignStrategy = null;
     }
 
     public String getText() {

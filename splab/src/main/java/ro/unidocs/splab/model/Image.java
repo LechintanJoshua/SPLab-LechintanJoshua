@@ -4,7 +4,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Reprezinta o imagine dintr-un capitol al cartii.
- * Resursa "heavy" a carei instantiere este intarziata.
  */
 public class Image extends Element {
     private String url;
