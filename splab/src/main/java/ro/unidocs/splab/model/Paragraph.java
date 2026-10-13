@@ -4,11 +4,11 @@ import ro.unidocs.splab.model.strategy.AlignStrategy;
 
 /**
  * Paragraph reprezinta un paragraph dintr-un capitol al cartii.
- * Acum actioneaza si drept 'Context' pentru Strategy Pattern.
+ * Actioneaza drept Context pentru Strategy Pattern.
  */
 public class Paragraph extends Element {
     private String text;
-    private AlignStrategy alignStrategy; // Referinta catre strategia curenta
+    private AlignStrategy alignStrategy;
 
     public Paragraph(String text) {
         super();
@@ -35,7 +35,7 @@ public class Paragraph extends Element {
     @Override
     public void print() {
         if (this.alignStrategy != null) {
-            this.alignStrategy.render(this);
+            this.alignStrategy.render(this.text);
         } else {
             System.out.println("Paragraph: " + this.text);
         }

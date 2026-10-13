@@ -1,18 +1,14 @@
 package ro.unidocs.splab.model.strategy;
 
-import ro.unidocs.splab.model.Paragraph;
-
 /**
  * Interfata de baza pentru Strategy Pattern.
- * Permite interschimbarea algoritmilor de aliniere a textului dintr-un paragraf.
+ * Decuplata de clasa Paragraph - primeste direct textul (String) pentru formatare.
  */
 public interface AlignStrategy {
     /**
-     * Randeaza (afiseaza) textul paragrafului cu un anumit aliniament.
-     * Daca decuplam de Context, cum sugereaza PDF-ul la pct 9d, parametrul
-     * poate fi direct String, dar conform diagramei initiale ramane Paragraph.
+     * Randeaza (afiseaza) textul cu un anumit aliniament.
      * 
-     * @param p Paragraful (Context-ul) ce contine textul de printat.
+     * @param text Textul ce urmeaza a fi formatat si afisat.
      */
-    void render(Paragraph p);
+    void render(String text);
 }
