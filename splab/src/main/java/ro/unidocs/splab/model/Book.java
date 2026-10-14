@@ -17,6 +17,10 @@ public class Book {
         this.chapters = new ArrayList<>();
     }
 
+    public String getTitle () {
+        return this.title;
+    }
+
     /**
      * Adauga un autor in lista de autori ai cartii
      * @param author Autorul care va fi adaugat
