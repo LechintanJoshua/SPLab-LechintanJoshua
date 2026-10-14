@@ -1,5 +1,7 @@
 package ro.unidocs.splab.model;
 
+import ro.unidocs.splab.model.visitor.Visitor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,10 @@ public class Section extends Element {
     public Section(String title) {
         this.title = title;
         this.elements = new ArrayList<>();
+    }
+
+    public String getTitle() {
+        return this.title;
     }
 
     /**
@@ -68,5 +74,11 @@ public class Section extends Element {
         System.out.println(this.title);
 
         this.elements.forEach(Element::print);
+    }
+
+    @Override
+    public void accept(Visitor vis) {
+        vis.visit(this);
+        this.elements.forEach(el -> el.accept(vis));
     }
 }

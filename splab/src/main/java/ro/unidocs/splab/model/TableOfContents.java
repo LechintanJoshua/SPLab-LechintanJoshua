@@ -1,10 +1,11 @@
 package ro.unidocs.splab.model;
 
+import ro.unidocs.splab.model.visitor.Visitor;
+
 /**
  * Reprezinta cuprinsul cartii.
  */
 public class TableOfContents extends Element {
-    // Continutul va fi definit in laboratoarele viitoare
     
     public TableOfContents() {
         super();
@@ -13,5 +14,10 @@ public class TableOfContents extends Element {
     @Override
     public void print() {
         System.out.println("Table of Contents:");
+    }
+
+    @Override
+    public void accept(Visitor vis) {
+        vis.visit(this);
     }
 }

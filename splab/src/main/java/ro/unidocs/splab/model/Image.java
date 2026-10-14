@@ -1,5 +1,7 @@
 package ro.unidocs.splab.model;
 
+import ro.unidocs.splab.model.visitor.Visitor;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,8 +20,17 @@ public class Image extends Element {
         }
     }
 
+    public String getUrl() {
+        return this.url;
+    }
+
     @Override
     public void print() {
         System.out.println("Image with name: " + this.url);
+    }
+
+    @Override
+    public void accept(Visitor vis) {
+        vis.visit(this);
     }
 }

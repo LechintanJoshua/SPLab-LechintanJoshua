@@ -1,6 +1,7 @@
 package ro.unidocs.splab.model;
 
 import ro.unidocs.splab.model.strategy.AlignStrategy;
+import ro.unidocs.splab.model.visitor.Visitor;
 
 /**
  * Paragraph reprezinta un paragraph dintr-un capitol al cartii.
@@ -18,6 +19,10 @@ public class Paragraph extends Element {
 
     public String getText() {
         return this.text;
+    }
+
+    public AlignStrategy getAlignStrategy() {
+        return this.alignStrategy;
     }
 
     /**
@@ -39,5 +44,10 @@ public class Paragraph extends Element {
         } else {
             System.out.println("Paragraph: " + this.text);
         }
+    }
+
+    @Override
+    public void accept(Visitor vis) {
+        vis.visit(this);
     }
 }
