@@ -26,11 +26,15 @@ public class TableOfContents extends Element {
     }
 
     @Override
-    public void print() {
+    public void render() {
         System.out.println("Table of Contents:");
         for (String entry : this.entries) {
             System.out.println(" - " + entry);
         }
+    }
+
+    public void print() {
+        render();
     }
 
     @Override

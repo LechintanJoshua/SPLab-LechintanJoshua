@@ -49,7 +49,7 @@ public class Book {
     }
 
     /**
-     * Afiseaza informatiile cartii (metoda legacy/standard).
+     * Afiseaza informatiile cartii.
      */
     public void print() {
         System.out.println("Book: " + this.title);
@@ -58,7 +58,11 @@ public class Book {
         this.authors.forEach(Author::print);
 
         System.out.println();
-        this.chapters.forEach(Element::print);
+        this.chapters.forEach(Element::render);
+    }
+
+    public void render() {
+        print();
     }
 
     /**
