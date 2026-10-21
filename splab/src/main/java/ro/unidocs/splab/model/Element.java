@@ -9,7 +9,7 @@ import ro.unidocs.splab.model.visitor.Visitor;
 public abstract class Element {
     private Element parent = null;
 
-    public abstract void print();
+    public abstract void render();
 
     public Element getParent() {
         return this.parent;

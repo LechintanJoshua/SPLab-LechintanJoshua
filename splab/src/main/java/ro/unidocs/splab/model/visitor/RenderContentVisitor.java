@@ -3,7 +3,7 @@ package ro.unidocs.splab.model.visitor;
 import ro.unidocs.splab.model.*;
 
 /**
- * Visitor responsabil cu randarea continutului
+ * Concrete Visitor responsabil cu randarea (afisarea) continutului
  * fiecarui tip de element din structura cartii.
  */
 public class RenderContentVisitor implements Visitor {
@@ -11,6 +11,9 @@ public class RenderContentVisitor implements Visitor {
     @Override
     public void visit(Book book) {
         System.out.println("Book: " + book.getTitle());
+        System.out.println("\nAuthors:");
+        book.getAuthors().forEach(Author::print);
+        System.out.println();
     }
 
     @Override
@@ -44,6 +47,6 @@ public class RenderContentVisitor implements Visitor {
 
     @Override
     public void visit(TableOfContents toc) {
-        System.out.println("Table of Contents:");
+        toc.print();
     }
 }

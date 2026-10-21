@@ -38,7 +38,7 @@ public class Paragraph extends Element {
      * daca o strategie este setata. Altfel, afiseaza standard.
      */
     @Override
-    public void print() {
+    public void render() {
         if (this.alignStrategy != null) {
             this.alignStrategy.render(this.text);
         } else {

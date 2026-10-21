@@ -70,10 +70,10 @@ public class Section extends Element {
      * Afiseaza toate detaliile Sectiunii respective,
      * parcurgand recursiv prin polimorfism toate elementele din interiorul ei.
      */
-    public void print() {
+    public void render() {
         System.out.println(this.title);
 
-        this.elements.forEach(Element::print);
+        this.elements.forEach(Element::render);
     }
 
     @Override
