@@ -1,5 +1,7 @@
 package ro.unidocs.splab.model;
 
+import ro.unidocs.splab.model.visitor.Visitor;
+
 /**
  * Reprezinta un tabel dintr-un capitol al cartii.
  */
@@ -11,8 +13,17 @@ public class Table extends Element {
         this.title = title;
     }
 
+    public String getTitle() {
+        return this.title;
+    }
+
     @Override
-    public void print() {
+    public void render() {
         System.out.println("Table with Title: " + this.title);
+    }
+
+    @Override
+    public void accept(Visitor vis) {
+        vis.visit(this);
     }
 }

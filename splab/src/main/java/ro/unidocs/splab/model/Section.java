@@ -1,5 +1,7 @@
 package ro.unidocs.splab.model;
 
+import ro.unidocs.splab.model.visitor.Visitor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,10 @@ public class Section extends Element {
     public Section(String title) {
         this.title = title;
         this.elements = new ArrayList<>();
+    }
+
+    public String getTitle() {
+        return this.title;
     }
 
     /**
@@ -64,9 +70,15 @@ public class Section extends Element {
      * Afiseaza toate detaliile Sectiunii respective,
      * parcurgand recursiv prin polimorfism toate elementele din interiorul ei.
      */
-    public void print() {
+    public void render() {
         System.out.println(this.title);
 
-        this.elements.forEach(Element::print);
+        this.elements.forEach(Element::render);
+    }
+
+    @Override
+    public void accept(Visitor vis) {
+        vis.visit(this);
+        this.elements.forEach(el -> el.accept(vis));
     }
 }

@@ -1,5 +1,7 @@
 package ro.unidocs.splab.model;
 
+import ro.unidocs.splab.model.visitor.Visitor;
+
 /**
  * Proxy virtual pentru clasa Image.
  * Instantierea imaginii reale este amanata pana la momentul folosirii acesteia.
@@ -14,20 +16,24 @@ public class ImageProxy extends Element {
         this.realImage = null;
     }
 
-    /**
-     * Incarca imaginea reala doar daca ea nu exista deja in memorie.
-     * @return instanta reala de Image
-     */
+    public String getUrl() {
+        return this.url;
+    }
+
     public Image loadImage() {
         if (this.realImage == null) {
             this.realImage = new Image(this.url);
         }
-
         return this.realImage;
     }
 
     @Override
-    public void print() {
-        loadImage().print();
+    public void render() {
+        loadImage().render();
+    }
+
+    @Override
+    public void accept(Visitor vis) {
+        vis.visit(this);
     }
 }

@@ -1,6 +1,7 @@
 package ro.unidocs.splab.model;
 
 import ro.unidocs.splab.model.strategy.AlignStrategy;
+import ro.unidocs.splab.model.visitor.Visitor;
 
 /**
  * Paragraph reprezinta un paragraph dintr-un capitol al cartii.
@@ -20,6 +21,10 @@ public class Paragraph extends Element {
         return this.text;
     }
 
+    public AlignStrategy getAlignStrategy() {
+        return this.alignStrategy;
+    }
+
     /**
      * Schimba algoritmul curent de formatare/aliniere a textului.
      * @param strategy Noua strategie de aliniere.
@@ -33,11 +38,16 @@ public class Paragraph extends Element {
      * daca o strategie este setata. Altfel, afiseaza standard.
      */
     @Override
-    public void print() {
+    public void render() {
         if (this.alignStrategy != null) {
             this.alignStrategy.render(this.text);
         } else {
             System.out.println("Paragraph: " + this.text);
         }
+    }
+
+    @Override
+    public void accept(Visitor vis) {
+        vis.visit(this);
     }
 }

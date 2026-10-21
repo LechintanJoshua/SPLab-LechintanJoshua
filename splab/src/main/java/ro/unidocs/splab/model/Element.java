@@ -1,5 +1,7 @@
 package ro.unidocs.splab.model;
 
+import ro.unidocs.splab.model.visitor.Visitor;
+
 /**
  * Element reprezinta orice componenta individuala
  * sau compusa a cartii.
@@ -7,7 +9,7 @@ package ro.unidocs.splab.model;
 public abstract class Element {
     private Element parent = null;
 
-    public abstract void print();
+    public abstract void render();
 
     public Element getParent() {
         return this.parent;
@@ -44,4 +46,6 @@ public abstract class Element {
     public Element get(int idx) {
         throw new UnsupportedOperationException("Cannot get an element from here.");
     }
+
+    public abstract void accept(Visitor vis);
 }
