@@ -10,9 +10,14 @@ import java.util.List;
  * Actioneaza ca radacina/agregator principal al continutului si autorilor.
  */
 public class Book {
+    private int id;
     private String title;
     private List<Author> authors;
     private List<Element> chapters;
+
+    public Book() {
+        this("");
+    }
 
     public Book(String title) {
         this.title = title;
@@ -20,8 +25,20 @@ public class Book {
         this.chapters = new ArrayList<>();
     }
 
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public List<Author> getAuthors() {
