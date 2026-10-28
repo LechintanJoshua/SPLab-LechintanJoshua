@@ -1,5 +1,8 @@
 package ro.unidocs.splab.model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import ro.unidocs.splab.model.visitor.Visitor;
 
 import java.util.ArrayList;
@@ -7,13 +10,21 @@ import java.util.List;
 
 /**
  * Reprezinta un capitol/subcapitol dintr-o carte.
- * Functioneaza ca un nod Compozit care poate contine alte Elemente.
+ * Entitate JPA compozita ce contine alte elemente copil.
  */
+@Entity
 public class Section extends Element {
     private String title;
+
+    @OneToMany(targetEntity = Element.class, cascade = CascadeType.ALL)
     private List<Element> elements;
 
+    public Section() {
+        this("");
+    }
+
     public Section(String title) {
+        super();
         this.title = title;
         this.elements = new ArrayList<>();
     }
@@ -22,13 +33,20 @@ public class Section extends Element {
         return this.title;
     }
 
-    /**
-     * Adauga un nou element (imagine, paragraf, sectiune) acestui capitol.
-     * @param el Elementul care va fi adaugat.
-     * @throws IllegalArgumentException daca elementul furnizat este null.
-     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<Element> getElements() {
+        return this.elements;
+    }
+
+    public void setElements(List<Element> elements) {
+        this.elements = elements;
+    }
+
     @Override
-    public void add (Element el) {
+    public void add(Element el) {
         if (el.getParent() != null) {
             throw new UnsupportedOperationException("Element already belongs to a section");
         }
@@ -37,13 +55,8 @@ public class Section extends Element {
         el.setParent(this);
     }
 
-    /**
-     * Sterge un element din sectiunea aferenta.
-     * @param el Elementul care va fi sters.
-     * @throws IllegalArgumentException daca elementul furnizat este null.
-     */
     @Override
-    public void remove (Element el) {
+    public void remove(Element el) {
         if (el == null) {
             throw new IllegalArgumentException("Cannot remove null.");
         }
@@ -51,12 +64,6 @@ public class Section extends Element {
         this.elements.remove(el);
     }
 
-    /**
-     * Obtine un element din sectiunea curenta, pe baza de index.
-     * @param idx Indexul elementului cautat (0-indexed).
-     * @return Elementul aferent indexului.
-     * @throws IllegalArgumentException daca indexul este in afara marginilor listei.
-     */
     @Override
     public Element get(int idx) {
         if (idx < 0 || idx >= this.elements.size()) {
@@ -66,13 +73,9 @@ public class Section extends Element {
         return this.elements.get(idx);
     }
 
-    /**
-     * Afiseaza toate detaliile Sectiunii respective,
-     * parcurgand recursiv prin polimorfism toate elementele din interiorul ei.
-     */
+    @Override
     public void render() {
         System.out.println(this.title);
-
         this.elements.forEach(Element::render);
     }
 

@@ -1,5 +1,7 @@
 package ro.unidocs.splab.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import ro.unidocs.splab.model.visitor.Visitor;
 
 import java.util.ArrayList;
@@ -7,12 +9,21 @@ import java.util.List;
 
 /**
  * Reprezinta o carte.
- * Actioneaza ca radacina/agregator principal al continutului si autorilor.
+ * Entitate JPA ce aggrega autorii si capitolele (elementele) sale.
  */
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String title;
+
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Author> authors;
+
+    @OneToMany(targetEntity = Element.class, cascade = CascadeType.ALL)
     private List<Element> chapters;
 
     public Book() {
@@ -45,8 +56,16 @@ public class Book {
         return this.authors;
     }
 
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
     public List<Element> getChapters() {
         return this.chapters;
+    }
+
+    public void setChapters(List<Element> chapters) {
+        this.chapters = chapters;
     }
 
     /**

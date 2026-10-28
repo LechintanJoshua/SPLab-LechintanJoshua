@@ -1,16 +1,38 @@
 package ro.unidocs.splab.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import ro.unidocs.splab.model.visitor.Visitor;
 
 /**
- * Element reprezinta orice componenta individuala
- * sau compusa a cartii.
+ * Element reprezinta radacina ierarhiei de elemente din carte.
+ * Entitate JPA configurata cu strategia de mostenire JOINED.
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Element {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Transient
+    @JsonIgnore
     private Element parent = null;
+
+    public Element() {
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public abstract void render();
 
+    @JsonIgnore
     public Element getParent() {
         return this.parent;
     }
@@ -22,7 +44,6 @@ public abstract class Element {
     /**
      * Metoda default pentru adaugarea unui Element.
      * @param el Elementul care va fi adaugat.
-     * @throws UnsupportedOperationException implicit, deoarece nodurile de tip frunza nu accepta elemente copil.
      */
     public void add(Element el) {
         throw new UnsupportedOperationException("Cannot add an element here.");
@@ -31,7 +52,6 @@ public abstract class Element {
     /**
      * Metoda default pentru stergerea unui Element.
      * @param el Elementul care va fi sters.
-     * @throws UnsupportedOperationException implicit.
      */
     public void remove(Element el) {
         throw new UnsupportedOperationException("Cannot remove an element from here.");
@@ -41,7 +61,6 @@ public abstract class Element {
      * Metoda default pentru gasirea unui Element de la un anumit index.
      * @param idx Indexul elementului cautat.
      * @return Elementul la acea pozitie.
-     * @throws UnsupportedOperationException implicit.
      */
     public Element get(int idx) {
         throw new UnsupportedOperationException("Cannot get an element from here.");
