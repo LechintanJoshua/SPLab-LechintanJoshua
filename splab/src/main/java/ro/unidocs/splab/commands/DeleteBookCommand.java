@@ -1,21 +1,23 @@
 package ro.unidocs.splab.commands;
 
-import ro.unidocs.splab.services.BooksService;
-
 /**
- * Comanda concreta pentru stergerea unei carti dupa ID.
+ * Comanda concreta pentru stergerea unei carti din baza de date dupa ID.
  */
 public class DeleteBookCommand implements Command<Boolean> {
-    private final BooksService booksService;
+    private final CommandContext context;
     private final int id;
 
-    public DeleteBookCommand(BooksService booksService, int id) {
-        this.booksService = booksService;
+    public DeleteBookCommand(CommandContext context, int id) {
+        this.context = context;
         this.id = id;
     }
 
     @Override
     public Boolean execute() {
-        return this.booksService.deleteBook(this.id);
+        if (this.context.getBooksRepository().findById(this.id).isEmpty()) {
+            return false;
+        }
+        this.context.getBooksRepository().deleteById(this.id);
+        return true;
     }
 }

@@ -1,22 +1,21 @@
 package ro.unidocs.splab.commands;
 
 import ro.unidocs.splab.model.Book;
-import ro.unidocs.splab.services.BooksService;
 
 /**
- * Comanda concreta pentru obtinerea unei carti dupa ID.
+ * Comanda concreta pentru cautarea unei carti dupa ID in baza de date.
  */
 public class GetBookByIdCommand implements Command<Book> {
-    private final BooksService booksService;
+    private final CommandContext context;
     private final int id;
 
-    public GetBookByIdCommand(BooksService booksService, int id) {
-        this.booksService = booksService;
+    public GetBookByIdCommand(CommandContext context, int id) {
+        this.context = context;
         this.id = id;
     }
 
     @Override
     public Book execute() {
-        return this.booksService.getBookById(this.id);
+        return this.context.getBooksRepository().findById(this.id).orElse(null);
     }
 }
