@@ -1,14 +1,25 @@
 package ro.unidocs.splab.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import ro.unidocs.splab.model.visitor.Visitor;
 
 /**
  * Proxy virtual pentru clasa Image.
- * Instantierea imaginii reale este amanata pana la momentul folosirii acesteia.
+ * Entitate JPA ce intarzie instantierea obiectului Image real pana la folosire.
  */
+@Entity
 public class ImageProxy extends Element {
     private String url;
+
+    @Transient
+    @JsonIgnore
     private Image realImage;
+
+    public ImageProxy() {
+        this("");
+    }
 
     public ImageProxy(String url) {
         super();
@@ -18,6 +29,10 @@ public class ImageProxy extends Element {
 
     public String getUrl() {
         return this.url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Image loadImage() {

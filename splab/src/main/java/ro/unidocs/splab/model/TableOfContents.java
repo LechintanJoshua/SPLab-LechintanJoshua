@@ -1,15 +1,19 @@
 package ro.unidocs.splab.model;
 
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
 import ro.unidocs.splab.model.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Reprezinta cuprinsul cartii (Table of Contents).
- * Poate contine o colectie de intrari reprezentand sectiunile si capitolele cartii.
+ * Reprezinta cuprinsul cartii.
+ * Entitate JPA ce stocheaza colectia de intrari ale cuprinsului.
  */
+@Entity
 public class TableOfContents extends Element {
+    @ElementCollection
     private List<String> entries;
 
     public TableOfContents() {
@@ -23,6 +27,10 @@ public class TableOfContents extends Element {
 
     public List<String> getEntries() {
         return this.entries;
+    }
+
+    public void setEntries(List<String> entries) {
+        this.entries = entries;
     }
 
     @Override

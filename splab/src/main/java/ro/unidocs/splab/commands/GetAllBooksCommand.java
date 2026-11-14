@@ -1,22 +1,21 @@
 package ro.unidocs.splab.commands;
 
 import ro.unidocs.splab.model.Book;
-import ro.unidocs.splab.services.BooksService;
 
 import java.util.List;
 
 /**
- * Comanda concreta pentru obtinerea tuturor cartilor.
+ * Comanda concreta pentru obtinerea tuturor cartilor din baza de date.
  */
 public class GetAllBooksCommand implements Command<List<Book>> {
-    private final BooksService booksService;
+    private final CommandContext context;
 
-    public GetAllBooksCommand(BooksService booksService) {
-        this.booksService = booksService;
+    public GetAllBooksCommand(CommandContext context) {
+        this.context = context;
     }
 
     @Override
     public List<Book> execute() {
-        return this.booksService.getAllBooks();
+        return this.context.getBooksRepository().findAll();
     }
 }

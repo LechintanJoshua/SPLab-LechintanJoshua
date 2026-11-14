@@ -1,15 +1,26 @@
 package ro.unidocs.splab.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import ro.unidocs.splab.model.strategy.AlignStrategy;
 import ro.unidocs.splab.model.visitor.Visitor;
 
 /**
- * Paragraph reprezinta un paragraph dintr-un capitol al cartii.
- * Actioneaza drept Context pentru Strategy Pattern.
+ * Paragraph reprezinta un paragraf de text dintr-o carte.
+ * Entitate JPA ce stocheaza textul paragrafului.
  */
+@Entity
 public class Paragraph extends Element {
     private String text;
+
+    @Transient
+    @JsonIgnore
     private AlignStrategy alignStrategy;
+
+    public Paragraph() {
+        this("");
+    }
 
     public Paragraph(String text) {
         super();
@@ -21,22 +32,18 @@ public class Paragraph extends Element {
         return this.text;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public AlignStrategy getAlignStrategy() {
         return this.alignStrategy;
     }
 
-    /**
-     * Schimba algoritmul curent de formatare/aliniere a textului.
-     * @param strategy Noua strategie de aliniere.
-     */
     public void setAlignStrategy(AlignStrategy strategy) {
         this.alignStrategy = strategy;
     }
 
-    /**
-     * Afiseaza continutul paragrafului delegand logica de randare catre strategie,
-     * daca o strategie este setata. Altfel, afiseaza standard.
-     */
     @Override
     public void render() {
         if (this.alignStrategy != null) {
