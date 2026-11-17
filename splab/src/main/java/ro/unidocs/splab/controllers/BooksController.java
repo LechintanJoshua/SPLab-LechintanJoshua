@@ -7,23 +7,28 @@ import org.springframework.web.bind.annotation.*;
 import ro.unidocs.splab.commands.*;
 import ro.unidocs.splab.commands.executors.CommandExecutor;
 import ro.unidocs.splab.model.Book;
+import ro.unidocs.splab.observer.AllBooksSubject;
 import ro.unidocs.splab.persistence.CrudRepository;
 
 import java.util.List;
 
 /**
  * Controller REST pentru gestionarea cartilor prin comenzi si stratul de persistenta
- * abstractizat CrudRepository conform cerintelor 7-9 din laborator.
+ * abstractizat CrudRepository, cu notificare prin Observer la creare.
  */
 @RestController
 public class BooksController {
     private final CrudRepository<Book, Integer> booksRepository;
     private final CommandExecutor commandExecutor;
+    private final AllBooksSubject allBooksSubject;
 
     @Autowired
-    public BooksController(CrudRepository<Book, Integer> booksRepository, CommandExecutor commandExecutor) {
+    public BooksController(CrudRepository<Book, Integer> booksRepository,
+                           CommandExecutor commandExecutor,
+                           AllBooksSubject allBooksSubject) {
         this.booksRepository = booksRepository;
         this.commandExecutor = commandExecutor;
+        this.allBooksSubject = allBooksSubject;
     }
 
     /**
@@ -52,13 +57,14 @@ public class BooksController {
     }
 
     /**
-     * POST /books - creaza o carte noua si o salveaza in baza de date.
+     * POST /books - creaza o carte noua, o salveaza in baza de date si notifica observatorii.
      */
     @PostMapping("/books")
     public ResponseEntity<Book> createBook(@RequestBody Book book) {
         CommandContext context = new CommandContext(this.booksRepository);
         Command<Book> cmd = new CreateBookCommand(context, book);
         Book created = this.commandExecutor.execute(cmd);
+        this.allBooksSubject.add(created);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
