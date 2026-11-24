@@ -3,6 +3,9 @@ package ro.unidocs.splab;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ro.unidocs.splab.difexamples.ClientComponent;
 import ro.unidocs.splab.difexamples.SingletonComponent;
 import ro.unidocs.splab.difexamples.TransientComponent;
@@ -30,5 +33,15 @@ public class SplabApplication {
 
         c = (ClientComponent) context.getBean("clientComponent");
         c.operation();
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**");
+            }
+        };
     }
 }
